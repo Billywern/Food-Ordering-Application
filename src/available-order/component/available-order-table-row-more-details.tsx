@@ -113,7 +113,11 @@ export const AvailableOrderTableRowMoreDetail = (props: AvailableOrderTableRowMo
           </Grid>
         </Grid>
       </Grid>
-      <OrderMenuDialog open={open} data={data} />
+      <OrderMenuDialog
+        open={open}
+        data={data}
+        onClose={handleCloseOrderMenu}
+      />
     </React.Fragment>
   )
 }

@@ -12,4 +12,4 @@ ReactDOM.render(
     <AvailableOrder />
   </ThemeProvider>,
   document.querySelector('#root'),
-);
+)
