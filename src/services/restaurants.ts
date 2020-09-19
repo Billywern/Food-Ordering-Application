@@ -8,6 +8,13 @@ export const getAvailableRestaurants = async ():Promise<GetAvailableRestaurantRe
   return data
 }
 
+export const sendOrders = async(restaurantId: string, menuIds: string[]): Promise<SendOrdersResponse> => {
+  const { data } = await axios.post('/restaurants/order', {
+    restaurantId,
+    menuIds
+  })
+  return data
+}
 export interface GetAvailableRestaurantResponse {
   data: GetAvailableRestaurantData[]
 }
@@ -30,4 +37,8 @@ interface menuItem {
   menuId: string
   name: string
   price: number
+}
+
+interface SendOrdersResponse {
+  isOrdered: boolean
 }

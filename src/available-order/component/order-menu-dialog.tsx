@@ -1,5 +1,5 @@
 import React, { useState, Fragment }from 'react'
-import { GetAvailableRestaurantData } from '../../services/restaurants'
+import { GetAvailableRestaurantData, sendOrders } from '../../services/restaurants'
 
 import { 
   createStyles,
@@ -20,7 +20,7 @@ import {
 } from '@material-ui/core'
 
 import {
-  Close as CloseIcon, Filter
+  Close as CloseIcon
 } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -58,8 +58,16 @@ export const OrderMenuDialog = (props: OrderMenuDialogProps) => {
     setOrder(newOrderChanges)
     setTotalPrice(newTotalPrice)
   }
-
+  const getCheckedMenuIds = () => order.filter((value) => value.chosen).map((value) => value.menuId)
   const cannotOrder = () => order.filter((value) => value.chosen).length === 0
+
+  const callSendOrder = async (restaurantId: string, menuIds: string[]) => {
+    const { isOrdered } = await sendOrders(restaurantId, menuIds)
+    if (isOrdered) {
+      setOrder(checkboxData)
+      onClose()
+    }
+  }
 
   return (
     <Fragment>
@@ -126,6 +134,7 @@ export const OrderMenuDialog = (props: OrderMenuDialogProps) => {
             variant='outlined' 
             color='primary'
             disabled={cannotOrder()}
+            onClick={() => callSendOrder(data.restaurantId, getCheckedMenuIds())}
           >
             Order
           </Button>
