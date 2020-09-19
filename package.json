@@ -1,0 +1,42 @@
+{
+  "name": "food-ordering-application",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "axios": "^0.20.0",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-scripts": "latest",
+    "typescript": "latest"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Billywern/Food-Ordering-Application.git"
+  },
+  "author": "Billy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Billywern/Food-Ordering-Application/issues"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
