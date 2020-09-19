@@ -22,6 +22,7 @@ import {
 } from '@material-ui/core'
 
 import {
+  AccessTime as AccessTimeIcon,
   KeyboardArrowUp as KeyboardArrowUpIcon,
   KeyboardArrowDown as KeyboardArrowDownIcon
 } from '@material-ui/icons'
@@ -36,6 +37,15 @@ const useStyles = makeStyles((theme: Theme) =>
     tableCellCollapse: {
       paddingTop: 0,
       paddingBottom: 0
+    },
+    tableCellMoreDetailsContainer: {
+      padding: theme.spacing(3)
+    },
+    operationHourTitle: {
+      marginBottom: theme.spacing(1)
+    },
+    operationHourOpeningTimeText: {
+      fontWeight: 600
     }
   }),
 );
@@ -43,17 +53,46 @@ const useStyles = makeStyles((theme: Theme) =>
 const convertMomentTimeLocale = (time: string) => moment(time, 'HHmm').format('h:mma')
 
 const AvailableOrderTableRowMoreDetail = (props: AvailableOrderTableRowMoreDetailProps) => {
+  const classes = useStyles()
   const { data } = props
+  const { startTime, endTime } = data.operationHours
+  const currentTime = moment().format('HHmm')
+  const currentDay = moment().format('dddd')
   const availableDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   return (
     <React.Fragment>
-      <Grid container>
-        <Typography variant='subtitle2'>
-          Operation Hours
-        </Typography>
+      <Grid container className={classes.tableCellMoreDetailsContainer}>
+        <Grid
+          className={classes.operationHourTitle}
+          container
+          spacing={1}
+          alignItems='center'
+        >
+          <Grid item>
+            <AccessTimeIcon/>
+          </Grid>
+          <Grid item>
+            <Typography variant='subtitle2'>
+              Operation Hours
+            </Typography>
+          </Grid>
+        </Grid>
         {availableDays.map((value) => {
           return (
-            <Grid>
+            <Grid
+              key={`${data.restaurantId}-${value}`} 
+              container
+            >
+              <Grid item xs={2}>
+                <Typography className={`${currentDay.includes(value) && classes.operationHourOpeningTimeText}`}>
+                  {value}
+                </Typography>
+              </Grid>
+              <Grid item xs={10}>
+                <Typography className={`${currentDay.includes(value) && currentTime > startTime && currentTime < endTime && classes.operationHourOpeningTimeText}`}>
+                  {convertMomentTimeLocale(data.operationHours.startTime)} - {convertMomentTimeLocale(data.operationHours.endTime)}
+                </Typography>
+              </Grid>
             </Grid>
           )
         })}
@@ -98,11 +137,7 @@ const AvailableOrderTableRow = (props: AvailableOrderTableRowProps) => {
             timeout='auto'
             unmountOnExit
           >
-            <Grid container>
-              <Typography>
-                Hello collapse
-              </Typography>
-            </Grid>
+            <AvailableOrderTableRowMoreDetail data={data}/>
           </Collapse>
         </TableCell>
       </TableRow>
@@ -120,10 +155,11 @@ const AvailableOrderTable = (props: AvailableOrderTableProps) => {
   return (
     <React.Fragment>
       <TableContainer component={Paper}>
-        <Table stickyHeader>
+        <Table>
           <TableHead>
             <TableCell sortDirection='asc'>Restaurant Name</TableCell>
             <TableCell sortDirection='desc'>Status</TableCell>
+            <TableCell/>
           </TableHead>
           <TableBody>
             {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((restaurantDetail, index) => (
