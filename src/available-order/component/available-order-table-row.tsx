@@ -37,7 +37,7 @@ export const AvailableOrderTableRow = (props: AvailableOrderTableRowProps) => {
   return (
     <React.Fragment>
       <TableRow>
-        <TableCell component="th" scope="row">
+        <TableCell component='th' scope='row'>
           <Typography variant='h6'>
             {data.name}
           </Typography>

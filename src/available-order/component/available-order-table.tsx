@@ -9,7 +9,7 @@ import {
   TableContainer,
   TableHead,
   TablePagination,
-  Paper
+  Paper, TableRow
 } from '@material-ui/core'
 
 export const AvailableOrderTable = (props: AvailableOrderTableProps) => {
@@ -25,9 +25,11 @@ export const AvailableOrderTable = (props: AvailableOrderTableProps) => {
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
-            <TableCell sortDirection='asc'>Restaurant Name</TableCell>
-            <TableCell sortDirection='desc'>Status</TableCell>
-            <TableCell/>
+            <TableRow>
+              <TableCell>Restaurant Name</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell/>
+            </TableRow>
           </TableHead>
           <TableBody>
             {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((restaurantDetail, index) => (

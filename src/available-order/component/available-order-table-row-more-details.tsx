@@ -1,5 +1,7 @@
 import React from 'react'
 import moment from 'moment'
+
+import { OrderMenuDialog } from './order-menu-dialog'
 import { GetAvailableRestaurantData } from '../../services/restaurants'
 import { convertMomentTimeLocale } from '../../util/dateTime'
 import { 
@@ -43,6 +45,16 @@ export const AvailableOrderTableRowMoreDetail = (props: AvailableOrderTableRowMo
   const currentTime = moment().format('HHmm')
   const currentDay = moment().format('dddd')
   const availableDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
+  const [open, setOpen] = React.useState(false)
+
+  const handleClickOpenOrderMenu = () => {
+    setOpen(true)
+  }
+
+  const handleCloseOrderMenu = () => {
+    setOpen(false)
+  }
   return (
     <React.Fragment>
       <Grid container className={classes.tableCellMoreDetailsContainer}>
@@ -95,12 +107,13 @@ export const AvailableOrderTableRowMoreDetail = (props: AvailableOrderTableRowMo
           justify='flex-end'
         >
           <Grid>
-            <Button color='primary'>
+            <Button color='primary' onClick={handleClickOpenOrderMenu}>
               View menu
             </Button>
           </Grid>
         </Grid>
       </Grid>
+      <OrderMenuDialog open={open} data={data} />
     </React.Fragment>
   )
 }
