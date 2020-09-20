@@ -4,11 +4,19 @@ axios.defaults.baseURL = 'http://localhost:8000'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
 export const getAvailableRestaurants = async (): Promise<GetAvailableRestaurantResponse> => {
+  /**
+   * Description:
+   * Get list of restaurants
+   */
   const { data } = await axios.get('/restaurants')
   return data
 }
 
 export const sendOrders = async (restaurantId: string, menuIds: string[], deliverBy: string): Promise<SendOrdersResponse> => {
+  /**
+   * Description:
+   * Send orders to restaurant
+   */
   const { data } = await axios.post('/restaurants/order', {
     restaurantId,
     menuIds,
@@ -17,6 +25,10 @@ export const sendOrders = async (restaurantId: string, menuIds: string[], delive
   return data
 }
 export const getPastOrders = async(): Promise<GetPastOrdersResponse> => {
+  /**
+   * Description:
+   * Get order histories
+   */
   const { data } = await axios.get('restaurants/past-orders')
   return data
 }

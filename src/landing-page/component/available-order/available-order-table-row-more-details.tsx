@@ -1,9 +1,9 @@
 import React from 'react'
 import moment from 'moment'
 
-import { OrderMenuDialog } from './order-menu-dialog'
-import { GetAvailableRestaurantData } from '../../services/restaurants'
-import { convertMomentTimeLocale } from '../../util/dateTime'
+import { OrderMenuDialog } from '../order-histories/order-menu-dialog'
+import { GetAvailableRestaurantData } from '../../../services/restaurants'
+import { convertMomentTimeLocale } from '../../../util/dateTime'
 import { 
   createStyles,
   makeStyles,
@@ -39,6 +39,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 export const AvailableOrderTableRowMoreDetail = (props: AvailableOrderTableRowMoreDetailProps) => {
+  /**
+   * Description:
+   * To show list of operation hours of the restaurant to user. This also directs user to view the menu
+   * of the particular restaurant.
+   */
   const classes = useStyles()
   const { data } = props
   const { startTime, endTime } = data.operationHours

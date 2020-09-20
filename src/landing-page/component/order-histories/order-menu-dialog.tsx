@@ -1,6 +1,6 @@
 import React, { useState, Fragment }from 'react'
 import moment from 'moment'
-import { GetAvailableRestaurantData, sendOrders } from '../../services/restaurants'
+import { GetAvailableRestaurantData, sendOrders } from '../../../services/restaurants'
 
 import { 
   createStyles,
@@ -43,6 +43,12 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const OrderMenuDialog = (props: OrderMenuDialogProps) => {
+  /**
+   * Description:
+   * To show a order menu view tied to a particular restaurants
+   * where user is able to place order correspond to it's availability
+   * including as off days and operation hours.
+   */
   const classes = useStyles()
   const { open, data, onClose } = props
   const checkboxData = data.menu.map((value) => ({
@@ -74,15 +80,19 @@ export const OrderMenuDialog = (props: OrderMenuDialogProps) => {
     const { offDays, operationHours} = data
     const startTime = operationHours.startTime
     const endTime = operationHours.endTime
+    // Check if chosen date is before current date
     if (chosenDateAndTime.isBefore(moment())) {
       setDateAndTimePickerErrorMessage('Please choose the correct date.')
       setdateAndTimePickerError(true)
+    // Check if chosen date is an off day
     } else if (offDays.includes(chosenDateAndTime.format('dddd'))) {
       setDateAndTimePickerErrorMessage('Restaurant is not avaiable on this date.')
       setdateAndTimePickerError(true)
+    // Check if chosen time is within operation hours
     } else if (startTime > chosenDateAndTime.format('HHmm') || endTime < chosenDateAndTime.format('HHmm')) {
       setDateAndTimePickerErrorMessage('Restaurant is not opened at this hour.')
       setdateAndTimePickerError(true)
+    // Check if chosen date is before 7 days
     } else if (chosenDateAndTime.diff(moment(), 'days') >= 7) {
       setDateAndTimePickerErrorMessage('Please choose a date within a week from now.')
       setdateAndTimePickerError(true)

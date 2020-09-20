@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { AvailableOrderTable } from './component/available-order-table'
-import { OrderHistoriesTable } from './component/order-histories-table'
+import { AvailableOrderTable } from './component/available-order/available-order-table'
+import { OrderHistoriesTable } from './component/order-histories/order-histories-table'
 import { 
   createStyles,
   makeStyles,
@@ -72,7 +72,7 @@ export const AvailableOrder = () => {
     setOrderHistories(results.data)
     setLoadOrderHistories(true)
   }
-  const GoToAvailableOrders = async () => {
+  const GoToAvailableOrders = () => {
     setLoadOrderHistories(false)
     setLoadAvailableOrder(true)
   }

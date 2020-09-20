@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { GetAvailableRestaurantData } from '../../services/restaurants'
-import { AvailableOrderTableRow } from'./available-order-table-row'
+import { GetPastOrdersData } from '../../../services/restaurants'
+import { OrderHistoriesTableRow } from './order-histories-table-row'
 
 import {
   Table,
@@ -12,7 +12,12 @@ import {
   Paper, TableRow
 } from '@material-ui/core'
 
-export const AvailableOrderTable = (props: AvailableOrderTableProps) => {
+export const OrderHistoriesTable = (props: OrderHistoriesTableProps) => {
+  /**
+   * Description:
+   * To show the history of order that the user has ordered.
+   * This is where the order history table is set.
+   */
   const { data } = props
   const rowsPerPage = 10
   const [ page, setPage ] = useState(0)
@@ -27,14 +32,16 @@ export const AvailableOrderTable = (props: AvailableOrderTableProps) => {
           <TableHead>
             <TableRow>
               <TableCell>Restaurant Name</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell/>
+              <TableCell>Food</TableCell>
+              <TableCell>Price</TableCell>
+              <TableCell>Ordered Date</TableCell>
+              <TableCell>Deliver By</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((restaurantDetail, index) => (
-              <AvailableOrderTableRow 
-                key={`availableOrderRow-${index}`}
+              <OrderHistoriesTableRow 
+                key={`order-histories-${index}`}
                 data={restaurantDetail}
               />
             ))}
@@ -53,6 +60,6 @@ export const AvailableOrderTable = (props: AvailableOrderTableProps) => {
   )
 }
 
-interface AvailableOrderTableProps {
-  data: GetAvailableRestaurantData[]
+interface OrderHistoriesTableProps {
+  data: GetPastOrdersData[]
 }

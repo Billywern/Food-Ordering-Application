@@ -1,6 +1,6 @@
 import React from 'react'
-import { GetAvailableRestaurantData } from '../../services/restaurants'
-import { convertMomentTimeLocale } from '../../util/dateTime'
+import { GetAvailableRestaurantData } from '../../../services/restaurants'
+import { convertMomentTimeLocale } from '../../../util/dateTime'
 import { AvailableOrderTableRowMoreDetail } from './available-order-table-row-more-details'
 
 import { 
@@ -31,6 +31,11 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const AvailableOrderTableRow = (props: AvailableOrderTableRowProps) => {
+  /**
+   * Description:
+   * To show the list of available restaurants based on operation hours, off days
+   * and also allow user to order food. This is where the data is set to each of its row. 
+   */
   const classes = useStyles()
   const { data } = props
   const [ open, setOpen ] = React.useState(false);

@@ -1,6 +1,7 @@
 import React from 'react'
-import { GetPastOrdersData } from '../../services/restaurants'
-import moment from 'moment'
+import { GetPastOrdersData } from '../../../services/restaurants'
+import { convertToMomentCalendarDate } from '../../../util/dateTime'
+
 import {
   Typography,
   TableCell,
@@ -8,18 +9,14 @@ import {
 } from '@material-ui/core'
 
 export const OrderHistoriesTableRow = (props: OrderHistoriesTableRowProps) => {
+  /**
+   * Description:
+   * To show the history of order that the user has ordered.
+   * This is where the order history table data is set in each of its row.
+   */
   const { data } = props
-
-  const formatToCalendarDate = (date: string) => moment(date).calendar({
-    sameDay: '[Today], hh:mm a',
-    lastDay: '[Yesterday], hh:mm a',
-    lastWeek: '[Last] dddd, hh:mm a',
-    sameElse: 'DD/MM/YYY, hh:mm a',
-    nextDay: '[Tomorrow], hh:mm a',
-    nextWeek: 'dddd, hh:mm a'
-  })
-  const formattedOrderedDate = formatToCalendarDate(data.createdOn)
-  const formattedDeliveryDate = formatToCalendarDate(data.deliverBy)
+  const formattedOrderedDate = convertToMomentCalendarDate(data.createdOn)
+  const formattedDeliveryDate = convertToMomentCalendarDate(data.deliverBy)
   return (
     <React.Fragment>
       <TableRow>
