@@ -28,17 +28,13 @@ As the app is still relevantly small, currently is using in such structure as sh
 **public**
 * Stores public files that mainly used to be stored in server such as s3 bucket, nginx /etc folder, etc.
 
-**src**
-
-Within src will be having the structure as such
-
-`${name}-page`
+**src/${name}-page**
 * If there is a different page (Determined if it is in a different route), it will be separated by different folder. Inside it contains any UI component related to the particular page.
 
-`services`
+**src/services**
 * Stores mainly any http client calling logic to the server
 
-`util`
+**src/util**
 * Stores any reusable util for the component UI to consume such as converting date and time, etc.
 
 ### How to setup?
