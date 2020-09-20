@@ -14,7 +14,7 @@ import {
 
 export const AvailableOrderTable = (props: AvailableOrderTableProps) => {
   /**
-   * Description:
+   * @description
    * To show the list of available restaurants based on operation hours, off days
    * and also allow user to order food. This is where the table is set to show the data.
    */

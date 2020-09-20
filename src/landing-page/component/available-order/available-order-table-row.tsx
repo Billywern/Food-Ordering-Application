@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const AvailableOrderTableRow = (props: AvailableOrderTableRowProps) => {
   /**
-   * Description:
+   * @description
    * To show the list of available restaurants based on operation hours, off days
    * and also allow user to order food. This is where the data is set to each of its row. 
    */

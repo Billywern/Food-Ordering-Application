@@ -14,7 +14,7 @@ import {
 
 export const OrderHistoriesTable = (props: OrderHistoriesTableProps) => {
   /**
-   * Description:
+   * @description
    * To show the history of order that the user has ordered.
    * This is where the order history table is set.
    */
@@ -33,7 +33,7 @@ export const OrderHistoriesTable = (props: OrderHistoriesTableProps) => {
             <TableRow>
               <TableCell>Restaurant Name</TableCell>
               <TableCell>Food</TableCell>
-              <TableCell>Price</TableCell>
+              <TableCell>Price (RM)</TableCell>
               <TableCell>Ordered Date</TableCell>
               <TableCell>Deliver By</TableCell>
             </TableRow>

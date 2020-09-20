@@ -5,7 +5,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json'
 
 export const getAvailableRestaurants = async (): Promise<GetAvailableRestaurantResponse> => {
   /**
-   * Description:
+   * @description
    * Get list of restaurants
    */
   const { data } = await axios.get('/restaurants')
@@ -14,7 +14,7 @@ export const getAvailableRestaurants = async (): Promise<GetAvailableRestaurantR
 
 export const sendOrders = async (restaurantId: string, menuIds: string[], deliverBy: string): Promise<SendOrdersResponse> => {
   /**
-   * Description:
+   * @description
    * Send orders to restaurant
    */
   const { data } = await axios.post('/restaurants/order', {
@@ -26,7 +26,7 @@ export const sendOrders = async (restaurantId: string, menuIds: string[], delive
 }
 export const getPastOrders = async(): Promise<GetPastOrdersResponse> => {
   /**
-   * Description:
+   * @description
    * Get order histories
    */
   const { data } = await axios.get('restaurants/past-orders')

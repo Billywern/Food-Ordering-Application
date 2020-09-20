@@ -10,7 +10,7 @@ import {
 
 export const OrderHistoriesTableRow = (props: OrderHistoriesTableRowProps) => {
   /**
-   * Description:
+   * @description
    * To show the history of order that the user has ordered.
    * This is where the order history table data is set in each of its row.
    */
@@ -32,7 +32,7 @@ export const OrderHistoriesTableRow = (props: OrderHistoriesTableRowProps) => {
         </TableCell>
         <TableCell>
           <Typography variant='h6'>
-            RM {data.menu.price}
+            {data.menu.price}
           </Typography>
         </TableCell>
         <TableCell>

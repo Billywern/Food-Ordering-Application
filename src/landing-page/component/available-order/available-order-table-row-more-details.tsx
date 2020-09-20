@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const AvailableOrderTableRowMoreDetail = (props: AvailableOrderTableRowMoreDetailProps) => {
   /**
-   * Description:
+   * @description
    * To show list of operation hours of the restaurant to user. This also directs user to view the menu
    * of the particular restaurant.
    */

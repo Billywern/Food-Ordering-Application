@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const OrderMenuDialog = (props: OrderMenuDialogProps) => {
   /**
-   * Description:
+   * @description
    * To show a order menu view tied to a particular restaurants
    * where user is able to place order correspond to it's availability
    * including as off days and operation hours.
