@@ -1,4 +1,5 @@
 import React, { useState, Fragment }from 'react'
+import moment from 'moment'
 import { GetAvailableRestaurantData, sendOrders } from '../../services/restaurants'
 
 import { 
@@ -16,6 +17,7 @@ import {
   FormControlLabel,
   Grid,
   IconButton,
+  TextField,
   Typography,
 } from '@material-ui/core'
 
@@ -25,6 +27,11 @@ import {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    dateAndTimePickerContainer: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      marginBottom: theme.spacing(2)
+    },
     checkboxForm: {
       marginBottom: theme.spacing(1)
     },
@@ -42,8 +49,12 @@ export const OrderMenuDialog = (props: OrderMenuDialogProps) => {
     ...value,
     chosen: false
   }))
-  const [order, setOrder] = useState(checkboxData)
-  const [totalPrice, setTotalPrice] = useState(0)
+  const [ order, setOrder ] = useState(checkboxData)
+  const [ totalPrice, setTotalPrice ] = useState(0)
+  const [ deliverBy, setDeliverBy ] = useState('')
+  const [ dateAndTimePickerError, setdateAndTimePickerError ] = useState(false)
+  const [ dateAndTimePickerErrorMessage, setDateAndTimePickerErrorMessage ] = useState('Please choose a date within a week from now.')
+
   const handleOrderChanges = (event: React.ChangeEvent<HTMLInputElement>, menuId: string) => {
     let newTotalPrice = 0
     const newOrderChanges = order.map((value) => {
@@ -58,11 +69,34 @@ export const OrderMenuDialog = (props: OrderMenuDialogProps) => {
     setOrder(newOrderChanges)
     setTotalPrice(newTotalPrice)
   }
+  const handleDeliveredDateChanges = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const chosenDateAndTime = moment(event.target.value)
+    const { offDays, operationHours} = data
+    const startTime = operationHours.startTime
+    const endTime = operationHours.endTime
+    if (chosenDateAndTime.isBefore(moment())) {
+      setDateAndTimePickerErrorMessage('Please choose the correct date.')
+      setdateAndTimePickerError(true)
+    } else if (offDays.includes(chosenDateAndTime.format('dddd'))) {
+      setDateAndTimePickerErrorMessage('Restaurant is not avaiable on this date.')
+      setdateAndTimePickerError(true)
+    } else if (startTime > chosenDateAndTime.format('HHmm') || endTime < chosenDateAndTime.format('HHmm')) {
+      setDateAndTimePickerErrorMessage('Restaurant is not opened at this hour.')
+      setdateAndTimePickerError(true)
+    } else if (chosenDateAndTime.diff(moment(), 'days') >= 7) {
+      setDateAndTimePickerErrorMessage('Please choose a date within a week from now.')
+      setdateAndTimePickerError(true)
+    } else {
+      setDeliverBy(chosenDateAndTime.format())
+      setDateAndTimePickerErrorMessage('')
+      setdateAndTimePickerError(false)
+    }
+  }
   const getCheckedMenuIds = () => order.filter((value) => value.chosen).map((value) => value.menuId)
   const cannotOrder = () => order.filter((value) => value.chosen).length === 0
 
-  const callSendOrder = async (restaurantId: string, menuIds: string[]) => {
-    const { isOrdered } = await sendOrders(restaurantId, menuIds)
+  const callSendOrder = async () => {
+    const { isOrdered } = await sendOrders(data.restaurantId, getCheckedMenuIds(), deliverBy)
     if (isOrdered) {
       setOrder(checkboxData)
       onClose()
@@ -87,6 +121,20 @@ export const OrderMenuDialog = (props: OrderMenuDialogProps) => {
           </Grid>
         </Grid>
         <DialogContent>
+          <form className={classes.dateAndTimePickerContainer} noValidate>
+            <TextField
+              error={dateAndTimePickerError}
+              id="datetime-local"
+              label="Delivered by"
+              type="datetime-local"
+              onChange={handleDeliveredDateChanges}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant='outlined'
+              helperText={dateAndTimePickerErrorMessage}
+            />
+          </form>
           {order.map((value, index) => {
             return (
               <Fragment key={`${value.name}-${index}`}>
@@ -133,8 +181,8 @@ export const OrderMenuDialog = (props: OrderMenuDialogProps) => {
             fullWidth
             variant='outlined' 
             color='primary'
-            disabled={cannotOrder()}
-            onClick={() => callSendOrder(data.restaurantId, getCheckedMenuIds())}
+            disabled={cannotOrder() || dateAndTimePickerError}
+            onClick={() => callSendOrder()}
           >
             Order
           </Button>

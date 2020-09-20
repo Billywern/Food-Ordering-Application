@@ -81,22 +81,27 @@ export const AvailableOrderTableRowMoreDetail = (props: AvailableOrderTableRowMo
             >
               <Grid item xs={2}>
                 <Typography 
-                  className={`${data.isAvailable && currentDay.includes(value) && classes.operationHourOpeningTimeText}`}
+                  className={`${data.isAvailable && !data.offDays.includes(value) && currentDay.includes(value) && classes.operationHourOpeningTimeText}`}
                 >
                   {value}
                 </Typography>
               </Grid>
               <Grid item xs={10}>
-                <Typography 
-                  className={
-                    `${data.isAvailable &&
-                      currentDay.includes(value) && 
-                      currentTime > startTime && 
-                      currentTime < endTime && classes.operationHourOpeningTimeText}`
+                {!data.offDays.includes(value) ?
+                  <Typography 
+                    className={
+                      `${data.isAvailable &&
+                        currentDay.includes(value) && 
+                        currentTime > startTime && 
+                        currentTime < endTime && classes.operationHourOpeningTimeText}`
+                    }
+                  >
+                    {convertMomentTimeLocale(data.operationHours.startTime)} - {convertMomentTimeLocale(data.operationHours.endTime)}
+                  </Typography> :
+                  <Typography>
+                    Close
+                  </Typography>
                   }
-                >
-                  {convertMomentTimeLocale(data.operationHours.startTime)} - {convertMomentTimeLocale(data.operationHours.endTime)}
-                </Typography>
               </Grid>
             </Grid>
           )

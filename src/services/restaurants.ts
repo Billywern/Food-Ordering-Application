@@ -8,10 +8,11 @@ export const getAvailableRestaurants = async (): Promise<GetAvailableRestaurantR
   return data
 }
 
-export const sendOrders = async (restaurantId: string, menuIds: string[]): Promise<SendOrdersResponse> => {
+export const sendOrders = async (restaurantId: string, menuIds: string[], deliverBy: string): Promise<SendOrdersResponse> => {
   const { data } = await axios.post('/restaurants/order', {
     restaurantId,
-    menuIds
+    menuIds,
+    deliverBy
   })
   return data
 }
@@ -58,5 +59,6 @@ export interface GetPastOrdersData {
   name: string
   offDays: string[]
   menu: menuItem
+  deliverBy: string
   createdOn: string
 }

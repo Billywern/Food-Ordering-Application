@@ -30,6 +30,7 @@ export const OrderHistoriesTable = (props: OrderHistoriesTableProps) => {
               <TableCell>Food</TableCell>
               <TableCell>Price</TableCell>
               <TableCell>Ordered Date</TableCell>
+              <TableCell>Deliver By</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
